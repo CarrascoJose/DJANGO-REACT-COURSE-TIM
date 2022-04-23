@@ -5,17 +5,21 @@ import Typography from "@material-ui/core/Typography";
 import TextField from  "@material-ui/core/TextField";   
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";    
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';  
 
+export const withRouter = (Component) => {
+    return (props) => {
+        const navigate = useNavigate();
+        return <Component {...props} navigate={navigate} />;
+    };
+};
 
 
-
-export default class CreateRoomPage extends Component {
+class CreateRoomPage extends Component {
     defaultVotes = 2;
-
 
     constructor(props){
         super(props);
@@ -54,7 +58,7 @@ export default class CreateRoomPage extends Component {
 
         fetch('api/create-room',requestOptions).then((response) => 
             response.json()
-        ).then((data) => this.props.history.push('/room'+data.code));
+        ).then((data) => this.props.navigate('/room/' + data.code));
     }
 
     render(){
@@ -118,5 +122,7 @@ export default class CreateRoomPage extends Component {
           </Grid>
         );
     }
-};
+}
 
+
+export default withRouter(CreateRoomPage);

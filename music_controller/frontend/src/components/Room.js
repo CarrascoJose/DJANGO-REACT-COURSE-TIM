@@ -9,8 +9,8 @@ class Room extends Component {
     constructor(props){
         super(props);
         this.state = {
-            votesToSkkip: 2,
-            guestCanPause: false,
+            votes_to_skip: 2,
+            guest_can_pause: false,
             isHost: false,
         };
         this.roomCode = this.props.params.roomCode;
@@ -19,12 +19,12 @@ class Room extends Component {
     }
 
     getRoomDetails(){
-        fetch('api/get-room'+'?code='+this.roomCode).then((response) => 
+        fetch('/api/get-room'+'?code='+this.roomCode).then((response) => 
         response.json()
         ).then((data) => {
             this.setState({
-                votesToSkip: data.votes_to_skip,
-                guestCanPause: data.guest_can_pause,
+                votes_to_skip: data.votes_to_skip,
+                guest_can_pause: data.guest_can_pause,
                 isHost: data.is_host,
             })
         })
@@ -33,8 +33,8 @@ class Room extends Component {
     render(){
         return <div>
                 <h3>{this.roomCode}</h3>
-                <p> Votes: {this.state.votesToSkkip}</p>
-                <p>Guest Can Pause: {this.state.guestCanPause.toString()}</p>
+                <p> Votes: {this.state.votes_to_skip}</p>
+                <p>Guest Can Pause: {this.state.guest_can_pause.toString()}</p>
                 <p>Host: {this.state.isHost.toString()}</p>
                 </div>
     }
